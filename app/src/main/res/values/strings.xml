@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">Bingo</string>
+
+    <string name="title_section1">Make a board</string>
+    <string name="title_section2">My boards</string>
+    <string name="title_section3">TBD</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_example"></string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="item_0">Find a camel-looking cloud</string>
+    <string name="item_1">One fact about your plane neighbor</string>
+    <string name="item_2">Take a selfie on the plane</string>
+    <string name="item_3">Ask a hot girl for direction</string>
+    <string name="item_4">Find a man with great beard</string>
+    <string name="item_5">Create fangs using anything</string>
+    <string name="item_6">Find name of place that sounds somewhat sexual</string>
+    <string name="item_7">Order food with New York accent</string>
+    <string name="item_8">Eat food like you are shooting a food porn video</string>
+    <string name="item_9">Take a selfie somewhere pretty in the East coast</string>
+    <string name="item_10">Find one gross thing on the plane</string>
+    <string name="item_11">Get a picture of the hottest flight attendant</string>
+    <string name="item_12">Find a pretty fall color tree in NY</string>
+    <string name="item_13">Find someone who looks like Gokul</string>
+    <string name="item_14">Find a yurt-looking cloud</string>
+    <string name="item_15">Grind someone at Thanksgiving party</string>
+
+    <string name="step_1">Step 1: Click on an item to modify</string>
+    <string name="next">Next</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
