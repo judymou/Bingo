@@ -14,6 +14,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
@@ -31,6 +32,8 @@ public class PlayFragment extends Fragment implements OnItemClickListener {
 	private List<GridviewItem> mItems;    // GridView items list
 	private GridviewAdapter mAdapter;    // GridView adapter
 	private GridView gridView;
+	private TextView bingoCount;
+	private TextView lastMove;
 	private Button smallCrab;
 	private Button largeCrab;
 	private boolean isUser;
@@ -81,6 +84,8 @@ public class PlayFragment extends Fragment implements OnItemClickListener {
 													 Bundle savedInstanceState) {
 		// inflate the root view of the fragment
 		final View fragmentView = inflater.inflate(R.layout.fragment_play, container, false);
+		bingoCount = (TextView) fragmentView.findViewById(R.id.bingo_count);
+		lastMove = (TextView) fragmentView.findViewById(R.id.last_move);
 
 		// initialize the adapter
 		mAdapter = new GridviewAdapter(getActivity(), mItems);
@@ -144,16 +149,23 @@ public class PlayFragment extends Fragment implements OnItemClickListener {
 					@Override
 					public void onDataChange(DataSnapshot snapshot) {
 						selectedIndex.clear();
+						int lastIndex = -1;
 						for(DataSnapshot s : snapshot.getChildren()) {
 							Action action = s.getValue(Action.class);
 							if (action == null) {
 								return;
 							}
 							selectedIndex.add(action.getItemIndex());
+							lastIndex = action.getItemIndex();
+						}
+						// Update the grid with colors.
+						mAdapter = new GridviewAdapter(getActivity(), mItems);
+						mAdapter.setSelectedIndex(selectedIndex);
+						gridView.setAdapter(mAdapter);
 
-							mAdapter = new GridviewAdapter(getActivity(), mItems);
-							mAdapter.setSelectedIndex(selectedIndex);
-							gridView.setAdapter(mAdapter);
+						// Update last move.
+						if (lastIndex > 0) {
+							lastMove.setText("Last Move: " + mItems.get(lastIndex).content);
 						}
 					}
 

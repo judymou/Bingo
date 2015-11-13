@@ -13,6 +13,31 @@
               android:gravity="center"
               android:horizontalSpacing="0dp"
               android:verticalSpacing="0dp"/>
+    <TextView
+        android:id="@+id/bingo_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="# Bingo: 1"
+        android:textColor="@color/PrimaryTextColor"
+        android:textSize="25sp"
+        android:background="@color/ItemBorder"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="160dp"/>
+
+    <TextView
+        android:id="@+id/last_move"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Last Move "
+        android:textColor="@color/PrimaryTextColor"
+        android:textSize="25sp"
+        android:background="@color/ItemBorder"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="90dp"
+        android:maxLines="2"
+        android:gravity="center"/>
 
     <LinearLayout
         android:layout_width="match_parent"

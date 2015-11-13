@@ -50,11 +50,11 @@ public class MainActivity extends ActionBarActivity
   public void onNavigationDrawerItemSelected(int position) {
     // update the main content by replacing fragments
     FragmentManager fragmentManager = getSupportFragmentManager();
-    if (position == 0) {
+    if (position == 1) {
       fragmentManager.beginTransaction()
           .replace(R.id.container, new GridviewFragment())
           .commit();
-    } else if (position == 1) {
+    } else if (position == 0) {
 			fragmentManager.beginTransaction()
 					.replace(R.id.container, new ListviewFragment())
 					.commit();
