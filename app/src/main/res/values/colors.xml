@@ -4,4 +4,5 @@
     <color name="GridBackground">#FFFFFF</color>
     <color name="ItemBorder">#FF80AB</color>
     <color name="PrimaryTextColor">#FFFFFF</color>
+    <color name="SecondaryTextColor">#F8BBD0</color>
 </resources>

@@ -79,5 +79,14 @@ public class ListviewFragment extends Fragment implements OnItemClickListener {
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 													long id) {
 		final GridviewItem item = mItems.get(position);
+
+		PlayFragment playFragment = new PlayFragment();
+		Bundle args = new Bundle();
+		args.putString("boardPath", item.content);
+		playFragment.setArguments(args);
+
+		getFragmentManager().beginTransaction()
+				.replace(R.id.container, playFragment)
+				.commit();
 	}
 }
