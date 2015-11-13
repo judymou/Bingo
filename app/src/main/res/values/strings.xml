@@ -29,8 +29,9 @@
     <string name="item_14">Find a yurt-looking cloud</string>
     <string name="item_15">Grind someone at Thanksgiving party</string>
 
-    <string name="step_1">Step 1: Click on an item to modify</string>
-    <string name="next">Next</string>
+    <string name="step_1">Click on an item to modify and pick a name for your board!</string>
+    <string name="save">Save</string>
+    <string name="board_name">Thanksgiving Edition</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

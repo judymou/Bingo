@@ -11,8 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+
+import com.project.judymou.bingo.data.FirebaseHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +59,7 @@ public class GridviewFragment extends Fragment implements OnItemClickListener {
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
     // inflate the root view of the fragment
-    View fragmentView = inflater.inflate(R.layout.fragment_gridview, container, false);
+    final View fragmentView = inflater.inflate(R.layout.fragment_gridview, container, false);
 
     // initialize the adapter
     mAdapter = new GridviewAdapter(getActivity(), mItems);
@@ -66,6 +69,15 @@ public class GridviewFragment extends Fragment implements OnItemClickListener {
     gridView.setAdapter(mAdapter);
     gridView.setOnItemClickListener(this);
 
+		// Initialize the button
+		Button button = (Button) fragmentView.findViewById(R.id.save);
+		button.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				EditText name = (EditText) fragmentView.findViewById(R.id.name);
+				FirebaseHelper.getInstance().saveBoard(name.getText().toString(), convertGridviewItemToString());
+			}
+		});
     return fragmentView;
   }
 
@@ -99,11 +111,11 @@ public class GridviewFragment extends Fragment implements OnItemClickListener {
               }
             })
         .setNegativeButton("Cancel",
-            new DialogInterface.OnClickListener() {
-              public void onClick(DialogInterface dialog,int id) {
-                dialog.cancel();
-              }
-            });
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								dialog.cancel();
+							}
+						});
 
     // create alert dialog
     AlertDialog alertDialog = alertDialogBuilder.create();
@@ -111,4 +123,12 @@ public class GridviewFragment extends Fragment implements OnItemClickListener {
     // show it
     alertDialog.show();
   }
+
+	private List<String> convertGridviewItemToString() {
+		List<String> itemStrings = new ArrayList<String>();
+		for (GridviewItem item : mItems) {
+			itemStrings.add(item.content);
+		}
+		return itemStrings;
+	}
 }

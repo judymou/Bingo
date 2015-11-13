@@ -21,13 +21,27 @@
         android:text="@string/step_1"
         android:textColor="@color/PrimaryTextColor"
         android:textSize="22dp"
+        android:gravity="center"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="80dp"/>
-    <Button
+        android:layout_marginBottom="160dp"/>
+    <EditText
+        android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/next"
+        android:text="@string/board_name"
+        android:inputType="text"
+        android:textColor="@color/PrimaryTextColor"
+        android:textSize="28sp"
+        android:background="@color/ItemBorder"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="90dp"/>
+    <Button
+        android:id="@+id/save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/save"
         android:background="@color/AppThemeColor"
         android:textColor="@color/PrimaryTextColor"
         android:textSize="22dp"

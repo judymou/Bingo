@@ -13,6 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.firebase.client.Firebase;
+
 
 public class MainActivity extends ActionBarActivity
     implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -30,6 +32,8 @@ public class MainActivity extends ActionBarActivity
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+		Firebase.setAndroidContext(this);
+
     setContentView(R.layout.activity_main);
 
     mNavigationDrawerFragment = (NavigationDrawerFragment)
