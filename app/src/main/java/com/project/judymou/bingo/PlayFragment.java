@@ -2,10 +2,13 @@ package com.project.judymou.bingo;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +19,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
@@ -75,6 +79,45 @@ public class PlayFragment extends Fragment implements OnItemClickListener {
 
 					@Override
 					public void onCancelled(FirebaseError firebaseError) {
+					}
+				});
+
+		FirebaseHelper.getInstance().getRef()
+				.child("scores/" + boardName + "/" + firebaseHelper.getOtherUserName())
+				.addChildEventListener(new ChildEventListener() {
+					@Override
+					public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+						System.out.println("judydfsss" + s);
+						NotificationCompat.Builder mBuilder =
+								new NotificationCompat.Builder(getActivity())
+										.setContentTitle("LCSC")
+										.setSmallIcon(R.drawable.ic_drawer)
+										.setContentText(firebaseHelper.getOtherUserName() + " just made a new move!");
+
+						int mNotificationId = 001;
+						NotificationManager mNotifyMgr =
+								(NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+						mNotifyMgr.notify(mNotificationId, mBuilder.build());
+					}
+
+					@Override
+					public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+					}
+
+					@Override
+					public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+					}
+
+					@Override
+					public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+					}
+
+					@Override
+					public void onCancelled(FirebaseError firebaseError) {
+
 					}
 				});
 	}
