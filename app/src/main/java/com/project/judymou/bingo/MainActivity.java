@@ -54,7 +54,11 @@ public class MainActivity extends ActionBarActivity
       fragmentManager.beginTransaction()
           .replace(R.id.container, new GridviewFragment())
           .commit();
-    } else {
+    } else if (position == 1) {
+			fragmentManager.beginTransaction()
+					.replace(R.id.container, new ListviewFragment())
+					.commit();
+		}	else {
       fragmentManager.beginTransaction()
           .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
           .commit();
