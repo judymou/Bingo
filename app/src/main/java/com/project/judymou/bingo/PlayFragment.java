@@ -18,11 +18,14 @@ import android.widget.GridView;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.project.judymou.bingo.data.Action;
 import com.project.judymou.bingo.data.Board;
 import com.project.judymou.bingo.data.FirebaseHelper;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class PlayFragment extends Fragment implements OnItemClickListener {
 	private List<GridviewItem> mItems;    // GridView items list
@@ -30,6 +33,11 @@ public class PlayFragment extends Fragment implements OnItemClickListener {
 	private GridView gridView;
 	private Button smallCrab;
 	private Button largeCrab;
+	private boolean isUser;
+	private String boardName;
+	private Set<Integer> selectedIndex;
+
+	private FirebaseHelper firebaseHelper;
 
 	@Override
 	public void onAttach(Activity activity) {
@@ -40,15 +48,18 @@ public class PlayFragment extends Fragment implements OnItemClickListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		firebaseHelper = FirebaseHelper.getInstance();
+
 		// initialize the items list
 		mItems = new ArrayList<GridviewItem>();
+		selectedIndex = new HashSet<Integer>();
 
-		String boardPath = getArguments().getString("boardPath");
-		FirebaseHelper.getInstance().getRef().child("boards/" + boardPath).addListenerForSingleValueEvent(
+		boardName = getArguments().getString("boardPath");
+		FirebaseHelper.getInstance().getRef().child("boards/" + boardName).addListenerForSingleValueEvent(
 				new ValueEventListener() {
 					@Override
 					public void onDataChange(DataSnapshot snapshot) {
-						Board board = (Board)snapshot.getValue(Board.class);
+						Board board = (Board) snapshot.getValue(Board.class);
 						if (board == null) {
 							return;
 						}
@@ -85,6 +96,12 @@ public class PlayFragment extends Fragment implements OnItemClickListener {
 			public void onClick(View v) {
 				smallCrab.setTextColor(getResources().getColor(R.color.SecondaryTextColor));
 				largeCrab.setTextColor(getResources().getColor(R.color.PrimaryTextColor));
+				if (firebaseHelper.getUserName().equals("smallCrab")) {
+					isUser = true;
+				} else {
+					isUser = false;
+				}
+				getSelectedIndex();
 			}
 		});
 
@@ -94,6 +111,12 @@ public class PlayFragment extends Fragment implements OnItemClickListener {
 			public void onClick(View v) {
 				largeCrab.setTextColor(getResources().getColor(R.color.SecondaryTextColor));
 				smallCrab.setTextColor(getResources().getColor(R.color.PrimaryTextColor));
+				if (firebaseHelper.getUserName().equals("largeCrab")) {
+					isUser = true;
+				} else {
+					isUser = false;
+				}
+				getSelectedIndex();
 			}
 		});
 
@@ -104,51 +127,39 @@ public class PlayFragment extends Fragment implements OnItemClickListener {
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 													long id) {
 		final GridviewItem item = mItems.get(position);
-/*
-		// get prompts.xml view
-		LayoutInflater li = LayoutInflater.from(getActivity());
-		View promptsView = li.inflate(R.layout.prompt, null);
-
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-				getActivity());
-
-		// set prompts.xml to alertdialog builder
-		alertDialogBuilder.setView(promptsView);
-
-		final EditText userInput = (EditText) promptsView
-				.findViewById(R.id.editTextDialogUserInput);
-
-		// set dialog message
-		alertDialogBuilder
-				.setCancelable(false)
-				.setPositiveButton("OK",
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,int id) {
-								// get user input and set it to result
-								// edit text
-								item.content = userInput.getText().toString();
-							}
-						})
-				.setNegativeButton("Cancel",
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int id) {
-								dialog.cancel();
-							}
-						});
-
-		// create alert dialog
-		AlertDialog alertDialog = alertDialogBuilder.create();
-
-		// show it
-		alertDialog.show();
-*/
+		// Making a move.
+		if (isUser) {
+			firebaseHelper.makeMove(boardName, position);
+			view.findViewById(R.id.content).setBackgroundColor(getResources().getColor(R.color.GridSelected));
+		}
 	}
 
-	private List<String> convertGridviewItemToString() {
-		List<String> itemStrings = new ArrayList<String>();
-		for (GridviewItem item : mItems) {
-			itemStrings.add(item.content);
+	public void getSelectedIndex() {
+		String queryUser = firebaseHelper.getUserName();
+		if (!isUser) {
+			queryUser = firebaseHelper.getOtherUserName();
 		}
-		return itemStrings;
+		FirebaseHelper.getInstance().getRef().child("scores/" + boardName + "/" + queryUser).addListenerForSingleValueEvent(
+				new ValueEventListener() {
+					@Override
+					public void onDataChange(DataSnapshot snapshot) {
+						selectedIndex.clear();
+						for(DataSnapshot s : snapshot.getChildren()) {
+							Action action = s.getValue(Action.class);
+							if (action == null) {
+								return;
+							}
+							selectedIndex.add(action.getItemIndex());
+
+							mAdapter = new GridviewAdapter(getActivity(), mItems);
+							mAdapter.setSelectedIndex(selectedIndex);
+							gridView.setAdapter(mAdapter);
+						}
+					}
+
+					@Override
+					public void onCancelled(FirebaseError firebaseError) {
+					}
+				});
 	}
 }

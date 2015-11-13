@@ -1,6 +1,7 @@
 package com.project.judymou.bingo;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,15 +9,21 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Set;
 
 public class GridviewAdapter extends BaseAdapter {
   private Context mContext;
   private List<GridviewItem> mItems;
+	private Set<Integer> selectedIndex;
 
   public GridviewAdapter(Context context, List<GridviewItem> items) {
     mContext = context;
     mItems = items;
+		selectedIndex = new HashSet<Integer>();
   }
 
   @Override
@@ -33,6 +40,10 @@ public class GridviewAdapter extends BaseAdapter {
   public long getItemId(int position) {
     return position;
   }
+
+	public void setSelectedIndex(Set<Integer> selectedIndex) {
+		this.selectedIndex = selectedIndex;
+	}
 
   @Override
   public View getView(int position, View convertView, ViewGroup parent) {
@@ -55,6 +66,10 @@ public class GridviewAdapter extends BaseAdapter {
     // update the item view
     GridviewItem item = mItems.get(position);
     viewHolder.content.setText(item.content);
+
+		if (selectedIndex.contains(position)) {
+			viewHolder.content.setBackgroundColor(Color.parseColor("#B2EBF2"));
+		}
 
     return convertView;
   }

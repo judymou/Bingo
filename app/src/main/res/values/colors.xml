@@ -5,4 +5,5 @@
     <color name="ItemBorder">#FF80AB</color>
     <color name="PrimaryTextColor">#FFFFFF</color>
     <color name="SecondaryTextColor">#F8BBD0</color>
+    <color name="GridSelected">#B2EBF2</color>
 </resources>
