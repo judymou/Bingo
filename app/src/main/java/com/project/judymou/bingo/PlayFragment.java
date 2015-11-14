@@ -81,45 +81,6 @@ public class PlayFragment extends Fragment implements OnItemClickListener {
 					public void onCancelled(FirebaseError firebaseError) {
 					}
 				});
-
-		FirebaseHelper.getInstance().getRef()
-				.child("scores/" + boardName + "/" + firebaseHelper.getOtherUserName())
-				.addChildEventListener(new ChildEventListener() {
-					@Override
-					public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-						System.out.println("judydfsss" + s);
-						NotificationCompat.Builder mBuilder =
-								new NotificationCompat.Builder(getActivity())
-										.setContentTitle("LCSC")
-										.setSmallIcon(R.drawable.ic_drawer)
-										.setContentText(firebaseHelper.getOtherUserName() + " just made a new move!");
-
-						int mNotificationId = 001;
-						NotificationManager mNotifyMgr =
-								(NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-						mNotifyMgr.notify(mNotificationId, mBuilder.build());
-					}
-
-					@Override
-					public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-					}
-
-					@Override
-					public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-					}
-
-					@Override
-					public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-					}
-
-					@Override
-					public void onCancelled(FirebaseError firebaseError) {
-
-					}
-				});
 	}
 
 	@Override

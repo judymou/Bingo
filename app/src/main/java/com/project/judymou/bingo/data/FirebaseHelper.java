@@ -26,6 +26,11 @@ public class FirebaseHelper {
 	public void makeMove(String boardName, int itemIndex) {
 		Action action = new Action(itemIndex);
 		ref.child("scores").child(boardName).child(userName).push().setValue(action);
+		ref.child("scores").child(boardName).child(userName).child("newstatus").push().setValue(action);
+	}
+
+	public void removeStatus(String boardName) {
+		ref.child("scores").child(boardName).child(otherUserName).child("newstatus").setValue(null);
 	}
 
 	public Firebase getRef() {
