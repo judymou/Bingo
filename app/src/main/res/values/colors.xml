@@ -6,4 +6,5 @@
     <color name="PrimaryTextColor">#FFFFFF</color>
     <color name="SecondaryTextColor">#F8BBD0</color>
     <color name="GridSelected">#B2EBF2</color>
+    <color name="NotificationColor">#F04F4F</color>
 </resources>

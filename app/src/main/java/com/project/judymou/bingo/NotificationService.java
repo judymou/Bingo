@@ -79,8 +79,9 @@ public class NotificationService extends Service {
 						NotificationCompat.Builder mBuilder =
 								new NotificationCompat.Builder(NotificationService.this)
 										.setContentTitle("Crabby")
-										.setSmallIcon(R.drawable.ic_drawer)
-										.setContentText(getDisplayName() + " just made a new move!");
+										.setSmallIcon(R.drawable.crab)
+										.setColor(getResources().getColor(R.color.NotificationColor))
+										.setContentText(getDisplayName() + " made a new move!");
 
 						int mNotificationId = 001;
 						mNM.notify(mNotificationId, mBuilder.build());
