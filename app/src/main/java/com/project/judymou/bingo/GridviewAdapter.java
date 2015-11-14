@@ -19,6 +19,7 @@ public class GridviewAdapter extends BaseAdapter {
   private Context mContext;
   private List<GridviewItem> mItems;
 	private Set<Integer> selectedIndex;
+	private boolean biggerFont;
 
   public GridviewAdapter(Context context, List<GridviewItem> items) {
     mContext = context;
@@ -45,6 +46,10 @@ public class GridviewAdapter extends BaseAdapter {
 		this.selectedIndex = selectedIndex;
 	}
 
+	public void setBiggerFont(boolean biggerFont) {
+		this.biggerFont = biggerFont;
+	}
+
   @Override
   public View getView(int position, View convertView, ViewGroup parent) {
     ViewHolder viewHolder;
@@ -53,8 +58,11 @@ public class GridviewAdapter extends BaseAdapter {
       // inflate the GridView item layout
       LayoutInflater inflater = LayoutInflater.from(mContext);
       convertView = inflater.inflate(R.layout.gridview_item, parent, false);
+			if (biggerFont) {
+				convertView = inflater.inflate(R.layout.gridview_item_bigger_font, parent, false);
+			}
 
-      // initialize the view holder
+				// initialize the view holder
       viewHolder = new ViewHolder();
       viewHolder.content = (TextView) convertView.findViewById(R.id.content);
       convertView.setTag(viewHolder);

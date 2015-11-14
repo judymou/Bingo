@@ -155,6 +155,9 @@ public class PlayFragment extends Fragment implements OnItemClickListener {
 						selectedIndex.clear();
 						int lastIndex = -1;
 						for(DataSnapshot s : snapshot.getChildren()) {
+							if (s.getKey().equals("newstatus")) {
+								continue;
+							}
 							Action action = s.getValue(Action.class);
 							if (action == null) {
 								return;

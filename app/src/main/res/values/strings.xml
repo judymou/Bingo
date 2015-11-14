@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Bingo</string>
+    <string name="app_name">Crabby</string>
 
     <string name="title_section1">My boards</string>
     <string name="title_section2">Make a board</string>
@@ -31,7 +31,7 @@
 
     <string name="step_1">Click on an item to modify and pick a name for your board!</string>
     <string name="save">Save</string>
-    <string name="board_name">Thanksgiving Edition</string>
+    <string name="board_name">Christmas Edition</string>
     <string name="small_crab">Small Crab</string>
     <string name="large_crab">Large Crab</string>
 

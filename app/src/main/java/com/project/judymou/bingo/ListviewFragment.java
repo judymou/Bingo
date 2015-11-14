@@ -25,7 +25,7 @@ import java.util.List;
 
 public class ListviewFragment extends Fragment implements OnItemClickListener {
 	private List<GridviewItem> mItems;    // GridView items list
-	private GridviewAdapter mAdapter;    // GridView adapter
+	private GridviewAdapter mAdapter;   // GridView adapter
 	private GridView gridView;
 
 	@Override
@@ -49,6 +49,7 @@ public class ListviewFragment extends Fragment implements OnItemClickListener {
 							mItems.add(new GridviewItem(name));
 						}
 						mAdapter = new GridviewAdapter(getActivity(), mItems);
+						mAdapter.setBiggerFont(true);
 						gridView.setAdapter(mAdapter);
 					}
 
@@ -66,6 +67,7 @@ public class ListviewFragment extends Fragment implements OnItemClickListener {
 
 		// initialize the adapter
 		mAdapter = new GridviewAdapter(getActivity(), mItems);
+		mAdapter.setBiggerFont(true);
 
 		// initialize the GridView
 		gridView = (GridView) fragmentView.findViewById(R.id.listView);

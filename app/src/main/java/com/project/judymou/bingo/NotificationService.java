@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.project.judymou.bingo.data.FirebaseHelper;
 
 public class NotificationService extends Service {
@@ -31,18 +32,55 @@ public class NotificationService extends Service {
 
 	@Override
 	public void onCreate() {
-		mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+		mNM = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 		firebaseHelper = FirebaseHelper.getInstance();
+		FirebaseHelper.getInstance().getRef().child("boards").addListenerForSingleValueEvent(
+				new ValueEventListener() {
+					@Override
+					public void onDataChange(DataSnapshot snapshot) {
+						for (DataSnapshot s : snapshot.getChildren()) {
+							String name = (String) s.getKey();
+							listenOnBoard(name);
+						}
+					}
+
+					@Override
+					public void onCancelled(FirebaseError firebaseError) {
+					}
+				});
+	}
+
+	@Override
+	public int onStartCommand(Intent intent, int flags, int startId) {
+		return START_STICKY;
+	}
+
+	@Override
+	public void onDestroy() {
+		// Tell the user we stopped.
+		Toast.makeText(this, "Crab service stopped.", Toast.LENGTH_SHORT).show();
+	}
+
+	@Override
+	public IBinder onBind(Intent intent) {
+		return mBinder;
+	}
+
+	// This is the object that receives interactions from clients.  See
+	// RemoteService for a more complete example.
+	private final IBinder mBinder = new NotificationServiceBinder();
+
+	private void listenOnBoard(String boardName) {
 		firebaseHelper.getRef()
-				.child("scores/" + "Thanksgiving Edition" + "/" + firebaseHelper.getOtherUserName() + "/newstatus")
+				.child("scores/" + boardName + "/" + firebaseHelper.getOtherUserName() + "/newstatus")
 				.addChildEventListener(new ChildEventListener() {
 					@Override
 					public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 						NotificationCompat.Builder mBuilder =
 								new NotificationCompat.Builder(NotificationService.this)
-										.setContentTitle("LCSC")
+										.setContentTitle("Crabby")
 										.setSmallIcon(R.drawable.ic_drawer)
-										.setContentText(firebaseHelper.getOtherUserName() + " just made a new move!");
+										.setContentText(getDisplayName() + " just made a new move!");
 
 						int mNotificationId = 001;
 						mNM.notify(mNotificationId, mBuilder.build());
@@ -70,23 +108,10 @@ public class NotificationService extends Service {
 				});
 	}
 
-	@Override
-	public int onStartCommand(Intent intent, int flags, int startId) {
-		return START_STICKY;
+	private String getDisplayName() {
+		if (firebaseHelper.getOtherUserName().equals("smallCrab")) {
+			return "Small crab";
+		}
+		return "Large crab";
 	}
-
-	@Override
-	public void onDestroy() {
-		// Tell the user we stopped.
-		Toast.makeText(this, "Crab service stopped.", Toast.LENGTH_SHORT).show();
-	}
-
-	@Override
-	public IBinder onBind(Intent intent) {
-		return mBinder;
-	}
-
-	// This is the object that receives interactions from clients.  See
-	// RemoteService for a more complete example.
-	private final IBinder mBinder = new NotificationServiceBinder();
 }
