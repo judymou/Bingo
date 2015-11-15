@@ -27,7 +27,7 @@
                 android:textAllCaps="false"
                 android:textColor="@color/PrimaryTextColor"
                 android:background="@color/AppThemeColor"
-                android:text="Load Picture" >
+                android:text="Pick Picture" >
             </Button>
         </LinearLayout>
     <LinearLayout

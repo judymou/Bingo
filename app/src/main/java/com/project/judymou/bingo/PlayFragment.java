@@ -176,8 +176,10 @@ public class PlayFragment extends Fragment implements OnItemClickListener {
 
 						score.setText("Score: " + selectedIndex.size());
 						// Update last move.
-						if (lastIndex > 0) {
+						if (lastIndex >= 0) {
 							lastMove.setText("Last move: " + mItems.get(lastIndex).content);
+						} else {
+							lastMove.setText("Last move:");
 						}
 					}
 

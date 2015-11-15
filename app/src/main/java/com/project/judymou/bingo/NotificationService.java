@@ -4,6 +4,7 @@ import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
@@ -81,6 +82,8 @@ public class NotificationService extends Service {
 										.setContentTitle("Hi there!")
 										.setSmallIcon(R.drawable.crab)
 										.setColor(getResources().getColor(R.color.NotificationColor))
+										.setSound(Uri.parse("android.resource://"
+												+ getApplicationContext().getPackageName() + "/" + R.raw.aim_incoming_message))
 										.setContentText(getDisplayName() + " made a new move.");
 
 						int mNotificationId = 001;
