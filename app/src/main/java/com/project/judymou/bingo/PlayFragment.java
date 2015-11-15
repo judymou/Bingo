@@ -31,7 +31,7 @@ public class PlayFragment extends Fragment implements OnItemClickListener {
 	private List<GridviewItem> mItems;    // GridView items list
 	private GridviewAdapter mAdapter;    // GridView adapter
 	private GridView gridView;
-	private TextView bingoCount;
+	private TextView score;
 	private TextView lastMove;
 	private Button smallCrab;
 	private Button largeCrab;
@@ -83,7 +83,7 @@ public class PlayFragment extends Fragment implements OnItemClickListener {
 													 Bundle savedInstanceState) {
 		// inflate the root view of the fragment
 		final View fragmentView = inflater.inflate(R.layout.fragment_play, container, false);
-		bingoCount = (TextView) fragmentView.findViewById(R.id.bingo_count);
+		score = (TextView) fragmentView.findViewById(R.id.score);
 		lastMove = (TextView) fragmentView.findViewById(R.id.last_move);
 
 		// initialize the adapter
@@ -174,9 +174,10 @@ public class PlayFragment extends Fragment implements OnItemClickListener {
 						mAdapter.setSelectedIndex(selectedIndex);
 						gridView.setAdapter(mAdapter);
 
+						score.setText("Score: " + selectedIndex.size());
 						// Update last move.
 						if (lastIndex > 0) {
-							lastMove.setText("Last Move: " + mItems.get(lastIndex).content);
+							lastMove.setText("Last move: " + mItems.get(lastIndex).content);
 						}
 					}
 

@@ -37,7 +37,7 @@ public class DisplayPictureActivity extends Activity {
 								Record record = snapshot.getValue(Record.class);
 								if (record == null) {
 									Toast.makeText(getApplicationContext(), "No image available",
-											Toast.LENGTH_LONG).show();
+											Toast.LENGTH_SHORT).show();
 									return;
 								}
 								byte[] decodedString = Base64.decode(record.getImageContent(), Base64.DEFAULT);
