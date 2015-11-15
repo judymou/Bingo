@@ -47,6 +47,7 @@ public class PlayFragment extends Fragment implements OnItemClickListener {
 	private Set<Integer> selectedIndex;
 
 	private FirebaseHelper firebaseHelper;
+	private View currentItemView;
 
 	@Override
 	public void onAttach(Activity activity) {
@@ -140,6 +141,7 @@ public class PlayFragment extends Fragment implements OnItemClickListener {
 		final GridviewItem item = mItems.get(position);
 		// Making a move.
 		if (isUser) {
+			currentItemView = view;
 			view.findViewById(R.id.content).setBackgroundColor(getResources().getColor(R.color.GridSelected));
 			Intent intent = new Intent(getActivity(), PickPictureActivity.class);
 			intent.putExtra("boardName", boardName);

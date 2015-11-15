@@ -23,10 +23,13 @@ public class FirebaseHelper {
 		ref.child("boards").child(name).setValue(board);
 	}
 
-	public void makeMove(String boardName, int itemIndex) {
+	public void makeMove(String boardName, int itemIndex, String imgContent) {
 		Action action = new Action(itemIndex);
 		ref.child("scores").child(boardName).child(userName).push().setValue(action);
 		ref.child("scores").child(boardName).child(userName).child("newstatus").push().setValue(action);
+
+		Record record = new Record(imgContent);
+		ref.child("records").child(boardName).child(userName).child("" + itemIndex).setValue(record);
 	}
 
 	public void removeStatus(String boardName) {
