@@ -78,10 +78,10 @@ public class NotificationService extends Service {
 					public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 						NotificationCompat.Builder mBuilder =
 								new NotificationCompat.Builder(NotificationService.this)
-										.setContentTitle("Crabby")
+										.setContentTitle("Hi there!")
 										.setSmallIcon(R.drawable.crab)
 										.setColor(getResources().getColor(R.color.NotificationColor))
-										.setContentText(getDisplayName() + " made a new move!");
+										.setContentText(getDisplayName() + " made a new move.");
 
 						int mNotificationId = 001;
 						mNM.notify(mNotificationId, mBuilder.build());
