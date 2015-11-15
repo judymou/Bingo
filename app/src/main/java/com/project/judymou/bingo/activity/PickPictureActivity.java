@@ -13,8 +13,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+import com.project.judymou.bingo.GridviewAdapter;
+import com.project.judymou.bingo.GridviewItem;
 import com.project.judymou.bingo.R;
 import com.project.judymou.bingo.data.FirebaseHelper;
+import com.project.judymou.bingo.data.Record;
 
 import java.io.ByteArrayOutputStream;
 
@@ -24,6 +30,7 @@ public class PickPictureActivity extends Activity {
 	private String boardName;
 	private int position;
 	private String imgContent;
+	private ImageView imgView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +38,27 @@ public class PickPictureActivity extends Activity {
 		setContentView(R.layout.activity_pick_picture);
 		boardName = getIntent().getExtras().getString("boardName");
 		position = getIntent().getExtras().getInt("position");
+
+		imgView = (ImageView) findViewById(R.id.imgView);
+		FirebaseHelper.getInstance().getRef()
+				.child("records/" + boardName + "/" + FirebaseHelper.getInstance().getUserName() + "/" + position)
+				.addListenerForSingleValueEvent(
+						new ValueEventListener() {
+							@Override
+							public void onDataChange(DataSnapshot snapshot) {
+								Record record = snapshot.getValue(Record.class);
+								if (record == null) {
+									return;
+								}
+								byte[] decodedString = Base64.decode(record.getImageContent(), Base64.DEFAULT);
+								Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+								imgView.setImageBitmap(decodedByte);
+							}
+
+							@Override
+							public void onCancelled(FirebaseError firebaseError) {
+							}
+						});
 	}
 
 	public void loadImagefromGallery(View view) {
@@ -61,7 +89,7 @@ public class PickPictureActivity extends Activity {
 				// Get the Image from data
 
 				Uri selectedImage = data.getData();
-				String[] filePathColumn = { MediaStore.Images.Media.DATA };
+				String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
 				// Get the cursor
 				Cursor cursor = getContentResolver().query(selectedImage,
@@ -89,7 +117,7 @@ public class PickPictureActivity extends Activity {
 
 	private String convertImageToBase64String(Bitmap bitmap) {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		bitmap.compress(Bitmap.CompressFormat.JPEG, 1, baos); //bm is the bitmap object
+		bitmap.compress(Bitmap.CompressFormat.JPEG, 10, baos); //bm is the bitmap object
 		byte[] b = baos.toByteArray();
 		return Base64.encodeToString(b, Base64.DEFAULT);
 	}

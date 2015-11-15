@@ -1,29 +1,22 @@
 package com.project.judymou.bingo;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.NotificationManager;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.NotificationCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
 
-import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.project.judymou.bingo.activity.DisplayPictureActivity;
 import com.project.judymou.bingo.activity.PickPictureActivity;
 import com.project.judymou.bingo.data.Action;
 import com.project.judymou.bingo.data.Board;
@@ -47,7 +40,6 @@ public class PlayFragment extends Fragment implements OnItemClickListener {
 	private Set<Integer> selectedIndex;
 
 	private FirebaseHelper firebaseHelper;
-	private View currentItemView;
 
 	@Override
 	public void onAttach(Activity activity) {
@@ -139,11 +131,16 @@ public class PlayFragment extends Fragment implements OnItemClickListener {
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 													long id) {
 		final GridviewItem item = mItems.get(position);
-		// Making a move.
 		if (isUser) {
-			currentItemView = view;
+			// Making a move.
 			view.findViewById(R.id.content).setBackgroundColor(getResources().getColor(R.color.GridSelected));
 			Intent intent = new Intent(getActivity(), PickPictureActivity.class);
+			intent.putExtra("boardName", boardName);
+			intent.putExtra("position", position);
+			getActivity().startActivity(intent);
+		} else {
+			// Displaying a image.
+			Intent intent = new Intent(getActivity(), DisplayPictureActivity.class);
 			intent.putExtra("boardName", boardName);
 			intent.putExtra("position", position);
 			getActivity().startActivity(intent);
@@ -161,7 +158,7 @@ public class PlayFragment extends Fragment implements OnItemClickListener {
 					public void onDataChange(DataSnapshot snapshot) {
 						selectedIndex.clear();
 						int lastIndex = -1;
-						for(DataSnapshot s : snapshot.getChildren()) {
+						for (DataSnapshot s : snapshot.getChildren()) {
 							if (s.getKey().equals("newstatus")) {
 								continue;
 							}
