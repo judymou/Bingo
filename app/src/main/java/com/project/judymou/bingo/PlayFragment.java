@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -23,6 +24,7 @@ import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.project.judymou.bingo.activity.PickPictureActivity;
 import com.project.judymou.bingo.data.Action;
 import com.project.judymou.bingo.data.Board;
 import com.project.judymou.bingo.data.FirebaseHelper;
@@ -138,8 +140,11 @@ public class PlayFragment extends Fragment implements OnItemClickListener {
 		final GridviewItem item = mItems.get(position);
 		// Making a move.
 		if (isUser) {
-			firebaseHelper.makeMove(boardName, position);
 			view.findViewById(R.id.content).setBackgroundColor(getResources().getColor(R.color.GridSelected));
+			Intent intent = new Intent(getActivity(), PickPictureActivity.class);
+			intent.putExtra("boardName", boardName);
+			intent.putExtra("position", position);
+			getActivity().startActivity(intent);
 		}
 	}
 
