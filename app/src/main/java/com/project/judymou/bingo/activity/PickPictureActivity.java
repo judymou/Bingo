@@ -79,6 +79,5 @@ public class PickPictureActivity extends Activity {
 			Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG)
 					.show();
 		}
-
 	}
 }
