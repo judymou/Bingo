@@ -11,10 +11,10 @@ import java.util.List;
 public class FirebaseHelper {
 	private static FirebaseHelper instance = null;
 	private Firebase ref;
-	//private String userName = "largeCrab";
-	//private String otherUserName = "smallCrab";
-	private String otherUserName = "largeCrab";
-	private String userName = "smallCrab";
+	private String userName = "largeCrab";
+	private String otherUserName = "smallCrab";
+	//private String otherUserName = "largeCrab";
+	//private String userName = "smallCrab";
 
 	public FirebaseHelper() {
 		ref = new Firebase("https://dazzling-inferno-2760.firebaseio.com/");

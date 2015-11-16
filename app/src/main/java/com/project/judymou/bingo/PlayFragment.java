@@ -98,8 +98,7 @@ public class PlayFragment extends Fragment implements OnItemClickListener {
 		smallCrab.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				smallCrab.setTextColor(getResources().getColor(R.color.SecondaryTextColor));
-				largeCrab.setTextColor(getResources().getColor(R.color.PrimaryTextColor));
+				setSmallCrabSelected();
 				if (firebaseHelper.getUserName().equals("smallCrab")) {
 					isUser = true;
 				} else {
@@ -113,8 +112,7 @@ public class PlayFragment extends Fragment implements OnItemClickListener {
 		largeCrab.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				largeCrab.setTextColor(getResources().getColor(R.color.SecondaryTextColor));
-				smallCrab.setTextColor(getResources().getColor(R.color.PrimaryTextColor));
+				setLargeCrabSelected();
 				if (firebaseHelper.getUserName().equals("largeCrab")) {
 					isUser = true;
 				} else {
@@ -125,6 +123,35 @@ public class PlayFragment extends Fragment implements OnItemClickListener {
 		});
 
 		return fragmentView;
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		getSelectedIndex();
+		if (isUser) {
+			if (firebaseHelper.getUserName().equals("smallCrab")) {
+				setSmallCrabSelected();
+			} else {
+				setLargeCrabSelected();
+			}
+		} else {
+			if (firebaseHelper.getUserName().equals("smallCrab")) {
+				setLargeCrabSelected();
+			} else {
+				setSmallCrabSelected();
+			}
+		}
+	}
+
+	private void setSmallCrabSelected() {
+		smallCrab.setTextColor(getResources().getColor(R.color.SecondaryTextColor));
+		largeCrab.setTextColor(getResources().getColor(R.color.PrimaryTextColor));
+	}
+
+	private void setLargeCrabSelected() {
+		largeCrab.setTextColor(getResources().getColor(R.color.SecondaryTextColor));
+		smallCrab.setTextColor(getResources().getColor(R.color.PrimaryTextColor));
 	}
 
 	@Override
