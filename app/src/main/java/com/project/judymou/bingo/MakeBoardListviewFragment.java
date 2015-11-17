@@ -23,7 +23,7 @@ import com.project.judymou.bingo.data.FirebaseHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListviewFragment extends Fragment implements OnItemClickListener {
+public class MakeBoardListviewFragment extends Fragment implements OnItemClickListener {
 	private List<GridviewItem> mItems;    // GridView items list
 	private GridviewAdapter mAdapter;   // GridView adapter
 	private GridView gridView;
@@ -71,13 +71,13 @@ public class ListviewFragment extends Fragment implements OnItemClickListener {
 													long id) {
 		final GridviewItem item = mItems.get(position);
 
-		PlayFragment playFragment = new PlayFragment();
+		UpdateBoardFragment updateBoardFragment = new UpdateBoardFragment();
 		Bundle args = new Bundle();
 		args.putString("boardPath", item.content);
-		playFragment.setArguments(args);
+		updateBoardFragment.setArguments(args);
 
 		getFragmentManager().beginTransaction()
-				.replace(R.id.container, playFragment)
+				.replace(R.id.container, updateBoardFragment)
 				.commit();
 	}
 
@@ -91,6 +91,7 @@ public class ListviewFragment extends Fragment implements OnItemClickListener {
 							String name = (String) s.getKey();
 							mItems.add(new GridviewItem(name));
 						}
+						mItems.add(new GridviewItem("Brand New"));
 						mAdapter = new GridviewAdapter(getActivity(), mItems);
 						mAdapter.setBiggerFont(true);
 						gridView.setAdapter(mAdapter);

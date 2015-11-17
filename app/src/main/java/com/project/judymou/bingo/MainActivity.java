@@ -64,7 +64,7 @@ public class MainActivity extends ActionBarActivity
 		FragmentManager fragmentManager = getSupportFragmentManager();
 		if (position == 1) {
 			fragmentManager.beginTransaction()
-					.replace(R.id.container, new GridviewFragment())
+					.replace(R.id.container, new MakeBoardListviewFragment())
 					.commit();
 		} else if (position == 0) {
 			fragmentManager.beginTransaction()
