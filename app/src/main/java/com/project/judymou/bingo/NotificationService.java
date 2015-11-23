@@ -1,6 +1,8 @@
 package com.project.judymou.bingo;
 
+import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +16,7 @@ import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.project.judymou.bingo.activity.NotificationActivity;
 import com.project.judymou.bingo.data.FirebaseHelper;
 
 public class NotificationService extends Service {
@@ -71,24 +74,32 @@ public class NotificationService extends Service {
 	// RemoteService for a more complete example.
 	private final IBinder mBinder = new NotificationServiceBinder();
 
-	private void listenOnBoard(String boardName) {
+	private void listenOnBoard(final String boardName) {
 		firebaseHelper.getRef()
 				.child("scores/" + boardName + "/" + firebaseHelper.getOtherUserName() + "/newstatus")
 				.addChildEventListener(new ChildEventListener() {
 					@Override
 					public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-						NotificationCompat.Builder mBuilder =
-								new NotificationCompat.Builder(NotificationService.this)
+						//Intent intent = new Intent(getApplicationContext(), NotificationActivity.class);
+						//intent.putExtra("playFragment", boardName);
+						//intent.putExtra("boardPath", boardName);
+						//PendingIntent pIntent = PendingIntent.getActivity(getApplicationContext(), (int) System.currentTimeMillis(), intent, 0);
+
+
+						Notification.Builder mBuilder =
+								new Notification.Builder(NotificationService.this)
 										.setContentTitle("Hi there!")
 										.setSmallIcon(R.drawable.crab)
+										//.setContentIntent(pIntent)
 										.setColor(getResources().getColor(R.color.NotificationColor))
 										.setSound(Uri.parse("android.resource://"
 												+ getApplicationContext().getPackageName() + "/" + R.raw.aim_incoming_message))
-										.setContentText(getDisplayName() + " made a new move.");
+										.setStyle(new Notification.BigTextStyle().bigText(
+												getDisplayName() + " made a new move on the '" + boardName + "' board."));
 
 						int mNotificationId = 001;
 						mNM.notify(mNotificationId, mBuilder.build());
-						firebaseHelper.removeStatus("Thanksgiving Edition");
+						firebaseHelper.removeStatus(boardName);
 					}
 
 					@Override
