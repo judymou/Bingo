@@ -17,7 +17,7 @@ public class FirebaseHelper {
 	//private String userName = "smallCrab";
 
 	public FirebaseHelper() {
-		ref = new Firebase("https://dazzling-inferno-2760.firebaseio.com/");
+		ref = new Firebase("");
 	}
 
 	public void saveBoard(String name, List<String> items) {
