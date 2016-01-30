@@ -25,12 +25,12 @@ public class FirebaseHelper {
 		ref.child("boards").child(name).setValue(board);
 	}
 
-	public void makeMove(String boardName, int itemIndex, String imgContent) {
+	public void makeMove(String boardName, int itemIndex, String imgContent, String imgText) {
 		Action action = new Action(itemIndex);
 		ref.child("scores").child(boardName).child(userName).push().setValue(action);
 		ref.child("scores").child(boardName).child(userName).child("newstatus").push().setValue(action);
 
-		Record record = new Record(imgContent);
+		Record record = new Record(imgContent, imgText);
 		ref.child("records").child(boardName).child(userName).child("" + itemIndex).setValue(record);
 	}
 

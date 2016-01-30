@@ -9,4 +9,22 @@
         android:layout_height="wrap_content"
         android:layout_weight="1" >
     </ImageView>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:padding="3sp">
+        <TextView
+            android:id="@+id/imgText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:padding="5sp"
+            android:layout_weight="0"
+            android:textColor="@color/PrimaryTextColor"
+            android:background="@color/AppThemeColor"
+            android:textSize="20dp">
+        </TextView>
+    </LinearLayout>
 </LinearLayout>

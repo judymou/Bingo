@@ -16,6 +16,22 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0"
+        android:layout_margin="3sp"
+        android:background="@color/AppThemeColor">
+        <EditText
+            android:id="@+id/imgTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/PrimaryTextColor"
+            android:gravity="center">
+            <requestFocus />
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
         android:padding="3sp">
             <Button
                 android:id="@+id/buttonLoadPicture"
@@ -29,7 +45,7 @@
                 android:background="@color/AppThemeColor"
                 android:text="Pick Picture" >
             </Button>
-        </LinearLayout>
+    </LinearLayout>
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

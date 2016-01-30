@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -30,7 +31,9 @@ public class PickPictureActivity extends Activity {
 	private String boardName;
 	private int position;
 	private String imgContent;
+	private String imgText;
 	private ImageView imgView;
+	private EditText imgTextView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,7 @@ public class PickPictureActivity extends Activity {
 		position = getIntent().getExtras().getInt("position");
 
 		imgView = (ImageView) findViewById(R.id.imgView);
+		imgTextView = (EditText) findViewById(R.id.imgTextView);
 		FirebaseHelper.getInstance().getRef()
 				.child("records/" + boardName + "/" + FirebaseHelper.getInstance().getUserName() + "/" + position)
 				.addListenerForSingleValueEvent(
@@ -50,9 +54,13 @@ public class PickPictureActivity extends Activity {
 								if (record == null) {
 									return;
 								}
-								byte[] decodedString = Base64.decode(record.getImageContent(), Base64.DEFAULT);
-								Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-								imgView.setImageBitmap(decodedByte);
+								imgContent = record.getImageContent();
+								if (imgContent != null) {
+									byte[] decodedString = Base64.decode(imgContent, Base64.DEFAULT);
+									Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+									imgView.setImageBitmap(decodedByte);
+								}
+								imgTextView.setText(record.getImageText());
 							}
 
 							@Override
@@ -71,7 +79,8 @@ public class PickPictureActivity extends Activity {
 	}
 
 	public void saveMove(View view) {
-		FirebaseHelper.getInstance().makeMove(boardName, position, imgContent);
+		imgText = ((EditText)findViewById(R.id.imgTextView)).getText().toString();
+		FirebaseHelper.getInstance().makeMove(boardName, position, imgContent, imgText);
 		finish();
 	}
 
