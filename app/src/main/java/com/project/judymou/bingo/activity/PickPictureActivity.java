@@ -126,7 +126,7 @@ public class PickPictureActivity extends Activity {
 
 	private String convertImageToBase64String(Bitmap bitmap) {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		bitmap.compress(Bitmap.CompressFormat.JPEG, 10, baos); //bm is the bitmap object
+		bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos); //bm is the bitmap object
 		byte[] b = baos.toByteArray();
 		return Base64.encodeToString(b, Base64.DEFAULT);
 	}
